@@ -1,0 +1,20 @@
+---
+title: A fresh start
+author: Aleksis
+date: '2020-03-25'
+slug: first-post
+categories: ['tips']
+tags: ['tips']
+subtitle: 'My first foray into a github built blog.'
+description: ''
+image: ''
+showtoc: false
+---
+
+This is my first post creating a blog using markdown/R Markdown. I followed the extremely helpful directions found in the [blogdown]("http://www.blogdown.com") package. I am not a coder by nature, and had to read the startup files slowly and repeatedly to understand what to do for each step. In addition, this is not my first time trying to create this blog. 
+
+I tried previously to create a blog and gave up part way through the blogdown setup. Primarily, I ran into git pull/push issues and - because I hadn't thoroughly read the first couple chapters of the blogdown book - made the mistake of editing the public file directly (don't do that). 
+
+This time, I chose a simpler theme that a [professor of mine from grad school](http://www.datadreaming.org) used, and looked through his configuration files on github when I needed to determine what to set up in my .toml file. 
+
+For simplicity, I've chosen to host this blog on netlify. Though the website is generated through files that I place on github, I previously tried to host my site directly on github and had difficulty. The blogdown package provides an overview of how to host on netlify, and recommends this hosting over github.
