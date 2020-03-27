@@ -59,14 +59,14 @@ home = ["HTML", "RSS", "Algolia"]
 
   [params.social]
   rss            = true 
-  email          = "aleksis.kincaid@gmail.com"
+  #email          = "aleksis.kincaid@gmail.com"
   #facebook      = "full profile url in facebook"
   #googleplus    = "full profile url in googleplus"
   #twitter       = "full profile url in twitter"
   #linkedin       = "https://www.linkedin.com/in/yourlinkedinid"
   #stackoverflow  = "https://stackoverflow.com/users/yourstackoverflowid"
   #instagram     = "full profile url in instagram"
-  github         = "https://github.com/akincaid"
+  github         = "https://github.com/aleksispaul"
   #wechat         = "your wechat qr code image"
   #medium         = "full profile url in medium"
   #pinterest     = "full profile url in pinterest"
