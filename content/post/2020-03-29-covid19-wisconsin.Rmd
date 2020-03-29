@@ -1,0 +1,95 @@
+---
+title: Minnesota and Wisconsin COVID-19 Cases
+author: Aleksis
+date: '2020-03-29'
+slug: covid19-wisconsin
+categories:
+  - COVID-19
+tags:
+  - COVID-19
+  - Maps
+subtitle: ''
+description: 'COVID-19 cases in Minnesota and Wisconsin'
+image: ''
+showtoc: false
+---
+
+A lot of websites have been developing dashboards to track the spread of COVID-19 across the globe. The most accurate and well-maintained of these is the one created by [Johns Hopkins](https://coronavirus.jhu.edu/map.html). Although you can drill down to state and county-level data on the Johns Hopkins dashboard, I wanted to combine a cloropleth map of just Minnesota and Wisconsin, since I live in St. Croix County, bordering Minnesota, and have family in both Minnesota and Wisconsin. 
+
+Before going any further, I want to point out that for any updated data, people should visit the CDC, Johns Hopkins dashboard, or their state's department of health websites. The [Wisconsin DHS COVID-19](https://www.dhs.wisconsin.gov/covid-19/index.htm) website has some of the charts I couldn't find on the Johns Hopkins website, including data on the increase in cases over time in Wisconsin, and the percent of cases by age groups and sex. 
+
+I decided to explore a new package I came across by the [Urban Institute](https://www.urban.org/). Sarah Strochak wrote an article on the impetus for creating the package on [Medium](https://medium.com/@urban_institute/how-to-create-state-and-county-maps-easily-in-r-577d29300bb2). The primary reason for the package was to cut down on the time it takes to build maps. Since I build map based plots fairly infrequently, a package that includes both county names and FIPS data for easy linkage with datasets was extremely appealing. In addition, the Medium article gave an overview of how to use the package with ggplot2 to create county-level plots, which was exactly what I wanted to create.
+
+```{r message=FALSE}
+library(tidyverse)
+library(ggthemes)
+library(plotly)
+
+devtools::install_github("UrbanInstitute/urbnmapr")
+library(urbnmapr)
+
+maprcounty <- left_join(countydata, counties, by="county_fips")
+```
+
+Johns Hopkins has made all of their data freely available to the public via their github repository. I forked (i.e., copied) the github repository and then cloned (i.e., downloaded) the repository to my Google Drive. Then, I pulled the most recent CSV file (3/28/2020) and extracted the county-level data on Minnesota and Wisconsin. In the future, I may try to create a time-series map, but this project was enough for one Sunday afternoon.
+
+```{r message=FALSE}
+uscases <- read_csv("~/Google Drive/git_website/COVID-19/csse_covid_19_data/csse_covid_19_daily_reports/03-28-2020.csv")
+
+wicases <- uscases %>% filter(Province_State=="Wisconsin")
+mncases <- uscases %>% filter(Province_State=="Minnesota")
+
+mwcases <- dplyr::bind_rows(wicases, mncases) #combining the Minnesota and Wisconsin datasets
+
+mwdata <- dplyr::left_join(mwcases, maprcounty, by= c("FIPS"="county_fips"))
+```
+
+Now that all the data is together in one very large dataset, I will try to plot the county data using ggplot2 and potentially, the plotly package.
+
+```{r message = FALSE}
+
+ggplot(mwdata, aes(x = long, y = lat, group = group, fill = Confirmed)) +
+  geom_polygon(color = "#ffffff", size = .25) +
+  coord_map(projection = "albers", lat0= 42, lat1 = 49)
+
+```
+
+The first plot doesn't really provide us with too much information. Since the majority of counties have a small number of cases, we can really only distinguish between the highest concentrations (Hennepin and Ramsey counties in Minnesota, Milwaukee and Dane counties in Wisconsin) and the rest of the state. To clean this up, I'm going to create a separate variable that bins cases in a way that brings out the underlying data a bit more fully.
+
+```{r message=FALSE}
+table(mwcases$Confirmed)
+```
+
+There are 87 counties in Minnesota and 73 in Wisconsin. Slightly more than half of these have 0 confirmed cases of COVID-19. To get this data into something a bit more readable for the map, I'll have to create a factor variable with a range of counts held within. 
+
+```{r message=FALSE}
+
+mwdata$chunked <- ifelse(mwdata$Confirmed==0, "0",
+                         ifelse(mwdata$Confirmed>=1 & mwdata$Confirmed<=5, "1-5",
+                                ifelse(mwdata$Confirmed>=6 & mwdata$Confirmed<=10, "6-10",
+                                       ifelse(mwdata$Confirmed>=11 & mwdata$Confirmed<=20, "11-20",
+                                              ifelse(mwdata$Confirmed>=21 & mwdata$Confirmed<=50, "21-50",
+                                                     ifelse(mwdata$Confirmed>=51 & mwdata$Confirmed<=100, "51-100",
+                                                            ifelse(mwdata$Confirmed>=100 & mwdata$Confirmed<=200, "101-200", ">200")))))))
+
+mwdata$chunked <- factor(mwdata$chunked, levels = c("0", "1-5", "6-10", "11-20", "21-50", "51-100", "101-200", ">200")) #ordering the factor levels
+```
+
+Now that I have my factor variable, I can clean up the map projection by having a shorter color range. After struggling with the 
+
+```{r message=FALSE, warning=FALSE, fig.align='center', fig.cap='Confirmed COVID-19 Cases as of March 28, 2020'}
+plot <- ggplot(mwdata, aes(x=long, y=lat, group = group, fill = chunked, text = paste("<b>", Admin2," County </b>", "<br /> Confirmed Cases: ", Confirmed))) +
+  geom_polygon(color='#a9a9a9', size = .25) +
+  scale_fill_brewer(type = "seq", aesthetics = "fill", palette = 'OrRd') +
+  #coord_map(projection = "mercator", ylim=c(42, 49.5)) + 
+  theme_map() +
+  theme(legend.position = "left") +
+  labs(fill = "Confirmed Cases")
+
+ggplotly(plot, tooltip = "text")
+```
+
+It's interesting to note that there isn't much cross-state contamination at this point. Wisconsin's St. Croix County is right across the border from Minnesota's Washington County. While Washington County has 25-confirmed cases, St. Croix only has 4. However, this could be due to a number of factors, including different rates of testing and how frequently states update their data. The county with the highest number of cases in each state is also a major metropolitan center (e.g., Milwaukee County - Milwaukee, Hennepin County - Minneapolis). This isn't overly surprising given that people are more densely packed together in these areas *and* these areas most likely have more options for accurately confirming COVID-19 cases. 
+
+
+
