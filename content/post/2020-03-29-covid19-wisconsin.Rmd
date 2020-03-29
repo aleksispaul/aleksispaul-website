@@ -14,7 +14,7 @@ image: ''
 showtoc: false
 ---
 
-A lot of websites have been developing dashboards to track the spread of COVID-19 across the globe. The most accurate and well-maintained of these is the one created by [Johns Hopkins](https://coronavirus.jhu.edu/map.html). Although you can drill down to state and county-level data on the Johns Hopkins dashboard, I wanted to combine a cloropleth map of just Minnesota and Wisconsin, since I live in St. Croix County, bordering Minnesota, and have family in both Minnesota and Wisconsin. 
+A lot of websites have been developing dashboards to track the spread of COVID-19 across the globe. The most accurate and well-maintained of these is the one created by [Johns Hopkins](https://coronavirus.jhu.edu/map.html). Although you can drill down to state and county-level data on the Johns Hopkins dashboard, I wanted to combine a choropleth map of just Minnesota and Wisconsin, since I live in St. Croix County, bordering Minnesota, and have family in both Minnesota and Wisconsin. 
 
 Before going any further, I want to point out that for any updated data, people should visit the CDC, Johns Hopkins dashboard, or their state's department of health websites. The [Wisconsin DHS COVID-19](https://www.dhs.wisconsin.gov/covid-19/index.htm) website has some of the charts I couldn't find on the Johns Hopkins website, including data on the increase in cases over time in Wisconsin, and the percent of cases by age groups and sex. 
 
