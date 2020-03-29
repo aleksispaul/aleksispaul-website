@@ -9,7 +9,7 @@ tags:
   - COVID-19
   - Maps
 subtitle: ''
-description: 'COVID-19 cases in Minnesota and Wisconsin'
+description: ''
 image: ''
 showtoc: false
 ---
