@@ -53,7 +53,7 @@ ggplot(mwdata, aes(x = long, y = lat, group = group, fill = Confirmed)) +
   coord_map(projection = "albers", lat0= 42, lat1 = 49)
 
 ```
-plot: ![](2020-3-20_covid_wimn.jpg)
+![](2020-3-20_covid_wimn.jpg)
 
 The first plot doesn't really provide us with too much information. Since the majority of counties have a small number of cases, we can really only distinguish between the highest concentrations (Hennepin and Ramsey counties in Minnesota, Milwaukee and Dane counties in Wisconsin) and the rest of the state. To clean this up, I'm going to create a separate variable that bins cases in a way that brings out the underlying data a bit more fully.
 
