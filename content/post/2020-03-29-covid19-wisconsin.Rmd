@@ -24,8 +24,6 @@ I decided to explore a new package I came across by the [Urban Institute](https:
 library(tidyverse)
 library(ggthemes)
 library(plotly)
-
-devtools::install_github("UrbanInstitute/urbnmapr")
 library(urbnmapr)
 
 maprcounty <- left_join(countydata, counties, by="county_fips")
@@ -46,14 +44,15 @@ mwdata <- dplyr::left_join(mwcases, maprcounty, by= c("FIPS"="county_fips"))
 
 Now that all the data is together in one very large dataset, I will try to plot the county data using ggplot2 and potentially, the plotly package.
 
-```{r message = FALSE, eval=FALSE}
+```{r message = FALSE}
 
-ggplot(mwdata, aes(x = long, y = lat, group = group, fill = Confirmed)) +
+plot0 <- ggplot(mwdata, aes(x = long, y = lat, group = group, fill = Confirmed)) +
   geom_polygon(color = "#ffffff", size = .25) +
   coord_map(projection = "albers", lat0= 42, lat1 = 49)
 
+plot0
+
 ```
-![](2020-3-20_covid_wimn.jpg)
 
 The first plot doesn't really provide us with too much information. Since the majority of counties have a small number of cases, we can really only distinguish between the highest concentrations (Hennepin and Ramsey counties in Minnesota, Milwaukee and Dane counties in Wisconsin) and the rest of the state. To clean this up, I'm going to create a separate variable that bins cases in a way that brings out the underlying data a bit more fully.
 
