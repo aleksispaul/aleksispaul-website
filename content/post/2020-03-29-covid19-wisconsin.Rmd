@@ -75,7 +75,7 @@ mwdata$chunked <- ifelse(mwdata$Confirmed==0, "0",
 mwdata$chunked <- factor(mwdata$chunked, levels = c("0", "1-5", "6-10", "11-20", "21-50", "51-100", "101-200", ">200")) #ordering the factor levels
 ```
 
-Now that I have my factor variable, I can clean up the map projection by having a shorter color range. After struggling with the 
+Now that I have my factor variable, I can clean up the map projection by having a shorter color range. In addition, I removed the albers projection from the map below. Although the projection does create a more proportional map of the United States, the result of using it for Minnesota and Wisconsin with the plotly package was a stunted y-axis, distorting the shape of each state and leaving extra white space on the top of the map plot.
 
 ```{r message=FALSE, warning=FALSE, fig.align='center', fig.cap='Confirmed COVID-19 Cases as of March 28, 2020'}
 plot <- ggplot(mwdata, aes(x=long, y=lat, group = group, fill = chunked, text = paste("<b>", Admin2," County </b>", "<br /> Confirmed Cases: ", Confirmed))) +
@@ -90,6 +90,3 @@ ggplotly(plot, tooltip = "text")
 ```
 
 It's interesting to note that there isn't much cross-state contamination at this point. Wisconsin's St. Croix County is right across the border from Minnesota's Washington County. While Washington County has 25-confirmed cases, St. Croix only has 4. However, this could be due to a number of factors, including different rates of testing and how frequently states update their data. The county with the highest number of cases in each state is also a major metropolitan center (e.g., Milwaukee County - Milwaukee, Hennepin County - Minneapolis). This isn't overly surprising given that people are more densely packed together in these areas *and* these areas most likely have more options for accurately confirming COVID-19 cases. 
-
-
-
