@@ -13,7 +13,7 @@ description: ''
 image: ''
 showtoc: FALSE
 ---
-I often end up trying to aggregate or merge student information across multiple google sheets to create simple charts/dashboards for attendance or grades. However, during the COVID-19 outbreak I've found my autodidactic approach to writing functions in Google Sheets has made it difficult to retain some of the functions in memory for future use. 
+I often end up trying to aggregate or merge student information across multiple google sheets to create simple charts/dashboards for attendance or grades. However, during the COVID-19 outbreak I've found my autodidactic approach to writing functions in Google Sheets has made it difficult to retain some of the functions in memory for future use, so I thought I would write down some of my high-leverage function combinations that I use just infrequently enough that I typically end up resorting to Google each time I need to use them.
 
 ##Creating a sorted list of unique data based on one column or sheet
 **When to use:** When you have duplicate student names or courses and you want the data to pull alphabetically.
