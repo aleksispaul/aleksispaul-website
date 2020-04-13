@@ -1,0 +1,57 @@
+---
+title: Quick functions in Google Sheets
+author: Aleksis
+date: '2020-04-13'
+slug: gsheet-functions
+categories:
+  - tips
+tags:
+  - Tips
+  - GSheets
+subtitle: ''
+description: ''
+image: ''
+showtoc: FALSE
+---
+
+
+
+<p>I often end up trying to aggregate or merge student information across multiple google sheets to create simple charts/dashboards for attendance or grades. However, during the COVID-19 outbreak I’ve found my autodidactic approach to writing functions in Google Sheets has made it difficult to retain some of the functions in memory for future use.</p>
+<div id="creating-a-sorted-list-of-unique-data-based-on-one-column-or-sheet" class="section level2">
+<h2>Creating a sorted list of unique data based on one column or sheet</h2>
+<p><strong>When to use:</strong> When you have duplicate student names or courses and you want the data to pull alphabetically.</p>
+<p><strong>Examples:</strong> Attendance list where there’s a new row for each time a student is absent, class passing rates where you want to know the unique names of classes students are not passing (to later pass a count function to).</p>
+<pre class="r"><code>=sort(unique(A:A), 1, TRUE)</code></pre>
+<p>The above is two functions, sort and unique. The sort function is sorting the range of data on the first column (thus the “1”) and sorting it in ascending fashion (that means alphabetically or numerically from 0 to infinity). If you switch the TRUE to FALSE, it would reverse-alphabetize, or go from the greatest to least number in your sort.</p>
+<p>The unique function merges any of the rows that have the same information. If “Fluffy Panda” had three rows in your dataset, you would end up with only one “Fluffy Panda”.</p>
+</div>
+<div id="creating-a-sorted-list-of-unique-data-based-on-a-matrix-or-multiple-sheets" class="section level2">
+<h2>Creating a sorted list of unique data based on a matrix or multiple sheets</h2>
+<p><strong>When to use:</strong> When you have duplicate data across multiple tabs of a Google Sheet, or you have a matrix of data for which people are adding information.</p>
+<p><strong>Examples:</strong> Duplicate list of teachers or classes across columns and rows you need to organize into one column to pass a count through.</p>
+<pre class="r"><code>=sort(unique{A:A;B:B}, 1, TRUE)</code></pre>
+<p>I discovered the ability to use the curly brackets with a semicolon to dig through multiple columns (or sheets!) and aggregate all of the information into a single column of unique results. <strong>If you don’t use the curly brackets and semicolon, it will return multiple columns</strong>.</p>
+</div>
+<div id="counting-how-many-times-your-unique-data-appears-in-a-duplicated-column" class="section level2">
+<h2>Counting how many times your unique data appears in a duplicated column</h2>
+<p><strong>When to use:</strong> When you have already created a condensed unique list of data such as student names on an attendnace list or classes students are failing, and you now want to count how often that student or class appears in the longer list.</p>
+<pre class="r"><code>=countif(A:A, x)</code></pre>
+<p>I probably didn’t actually need to include this formula for myself. However, you replace the “X” with whatever column/row combination (such as “C2”) has the unique value sitting in it. This tells the countif function to look through the full list of rows in column A and count how many times that unique class name/student appears.</p>
+</div>
+<div id="pulling-a-value-with-vlookup-and-replacing-na-with-a-0" class="section level2">
+<h2>Pulling a value with vlookup and replacing #N/A with a 0</h2>
+<p><strong>When to use:</strong> When you’re pulling counts or data across multiple sheets where not all unique students/classes are included on each sheet.</p>
+<pre class="r"><code>=iferror( vlookup( A2, X, ColN, FALSE), 0)</code></pre>
+<p>I built the above function to look up a unique list of student names pulled across multiple spreadsheets and quickly count whether they were absent that week. The A2 is a stand-in for the student name in a specific row/column, X is the range (matrix) of data you want to search, and ColN is the column information you want to link if the student name is matched.</p>
+<p>What always annoys me with vlookup is that if there is not a match, you get an #N/A. This is fine if you’re running a search once and you can do a quick find/replace, but during the COVID-19 outbreak, I found that I had multiple spreadsheets where student names on the attendance roster changed weekly (I was only receiving a report of absent students, not all students) and the vlookup function would return an #N/A for a student who was marked present for all classes. I wanted that value to read as “0” since they were absent in zero classes, so I wrapped the vlookup function into an =iferror function which tells it to print “0” if it doesn’t find that student for a given week.</p>
+</div>
+<div id="conclusion-and-future-updates" class="section level2">
+<h2>Conclusion and Future Updates</h2>
+<p>This is a really quick overview of some common functions I use on an annual basis. Because I typically set up a sheet and then simply let the functions run, I’ve often forgot how to do some of these combinations. Hopefully, this will reduce my (and your) need to search Google every time you’re doing a simple sort/count of duplicated data.</p>
+<p>In the future I plan to return to this post and:</p>
+<ul>
+<li>Add screenshots</li>
+<li>Add additional functions</li>
+<li><del>Fix formatting of function text to a monospaced font</del></li>
+</ul>
+</div>
