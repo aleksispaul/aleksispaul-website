@@ -50,7 +50,7 @@
     <link rel="canonical" href="{{ .URL | relURL }}">
 
     <link rel="stylesheet" href="{{ "css/iDisqus.min.css" | relURL }}"/>
-	
+
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="{{ "css/bootstrap.min.css" | relURL }}">
 
@@ -59,7 +59,7 @@
 
     <!-- zangshang CSS -->
     <link rel="stylesheet" href="{{ "css/zanshang.css" | relURL }}">
-    
+
     <!-- Custom Fonts -->
     <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
@@ -73,10 +73,10 @@
     -->
     <!-- jQuery -->
     <script src="{{ "js/jquery.min.js" | relURL }}"></script>
-    
+
     <!-- Bootstrap Core JavaScript -->
     <script src="{{ "js/bootstrap.min.js" | relURL }}"></script>
-    
+
     <!-- Hux Theme JavaScript -->
     <script src="{{ "js/hux-blog.min.js" | relURL }}"></script>
 
@@ -85,5 +85,8 @@
     <script src="{{ . | absURL }}"></script>
     {{ end }}
 
-</head>
+    <link rel="stylesheet" href="{{"css/github-gist.css" | absURL}}" rel="stylesheet" id="theme-stylesheet">
+<script src="{{ "js/highlight.pack.js" | absURL }}"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 
+</head>
