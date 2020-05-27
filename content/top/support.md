@@ -1,16 +1,5 @@
 ---
-title: Support
-author:
-date: '2020-05-27'
-slug: support
-categories:
-  - support
-tags: []
-subtitle: ''
-description: ''
-image: ''
-showtoc: FALSE
-draft: TRUE
+{}
 ---
 
 As time goes on there will be more ways to support my website. For the time being, the easiest way will be to use the Amazon link to a product (most likely a book) I discuss on my website. Using the link will give me a small commission on whatever you purchase and without you incurring any additional costs. 

@@ -95,8 +95,8 @@ home = ["HTML", "RSS", "Algolia"]
   href = "https://unsplash.com"
 
   [[params.addtional_menus]]
-  title =  "BOOKS"
-  href =  "/top/books/"
+  title =  "SUPPORT"
+  href =  "/top/support/"
 
   [[params.addtional_menus]]
   title =  "ABOUT"
